@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Display JSON Data</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <h1>My Cats</h1>
+  <ul id="catList"></ul>
+
+  <script>
+    $(function() {
+      $.getJSON("cats.json", function(data) {
+        $.each(data.cats, function(index, cat) {
+          $("#catList").append("<li>" + cat.name + " - " + cat.age + " years old</li>");
+        });
+      });
+    });
+  </script>
+</body>
+</html>
