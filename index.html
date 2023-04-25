@@ -1,21 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Display JSON Data</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Cats</title>
+	<style>
+		.card {
+			border: 1px solid black;
+			padding: 10px;
+			margin: 10px;
+			width: 300px;
+			display: none;
+		}
+	</style>
 </head>
 <body>
-  <h1>My Cats</h1>
-  <ul id="catList"></ul>
+	<h1>Cats</h1>
+	<label for="catSelect">Select a cat:</label>
+	<select id="catSelect" onchange="displayCatInfo()">
+		<option value="">--Select a cat--</option>
+	</select>
+	<div id="catInfo"></div>
+	<script>
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		        var catData = JSON.parse(this.responseText);
 
-  <script>
-    $(function() {
-      $.getJSON("cats.json", function(data) {
-        $.each(data.cats, function(index, cat) {
-          $("#catList").append("<li>" + cat.name + " - " + cat.age + " years old</li>");
-        });
-      });
-    });
-  </script>
+		        var catSelect = document.getElementById("catSelect");
+		        var catInfo = document.getElementById("catInfo");
+
+		        for (var i = 0; i < catData.cats.length; i++) {
+		        	var option = document.createElement("option");
+		        	option.value = i;
+		        	option.textContent = catData.cats[i].name;
+		        	catSelect.appendChild(option);
+		        }
+
+		        function displayCatInfo() {
+		        	catInfo.innerHTML = "";
+		        	var catIndex = catSelect.value;
+
+		        	if (catIndex != "") {
+		        		var cat = catData.cats[catIndex];
+
+		        		var card = document.createElement("div");
+		        		card.className = "card";
+
+		        		var name = document.createElement("h2");
+		        		name.textContent = cat.name;
+
+		        		var age = document.createElement("p");
+		        		age.textContent = "Age: " + cat.age;
+
+		        		card.appendChild(name);
+		        		card.appendChild(age);
+
+		        		catInfo.appendChild(card);
+		        		card.style.display = "block";
+		        	}
+		        }
+		    }
+		};
+		xmlhttp.open("GET", "cats.json", true);
+		xmlhttp.send();
+	</script>
 </body>
 </html>
