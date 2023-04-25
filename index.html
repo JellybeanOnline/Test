@@ -21,10 +21,12 @@
 	</select>
 	<div id="catInfo"></div>
 	<script>
+		var catData;
+
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 		    if (this.readyState == 4 && this.status == 200) {
-		        var catData = JSON.parse(this.responseText);
+		        catData = JSON.parse(this.responseText);
 
 		        var catSelect = document.getElementById("catSelect");
 		        var catInfo = document.getElementById("catInfo");
@@ -56,6 +58,7 @@
         	card.appendChild(name);
         	card.appendChild(age);
 
+        	var catInfo = document.getElementById("catInfo");
         	catInfo.innerHTML = "";
         	catInfo.appendChild(card);
         	card.style.display = "block";
