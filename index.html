@@ -35,34 +35,31 @@
 		        	option.textContent = catData.cats[i].name;
 		        	catSelect.appendChild(option);
 		        }
-
-		        function displayCatInfo() {
-		        	catInfo.innerHTML = "";
-		        	var catIndex = catSelect.value;
-
-		        	if (catIndex != "") {
-		        		var cat = catData.cats[catIndex];
-
-		        		var card = document.createElement("div");
-		        		card.className = "card";
-
-		        		var name = document.createElement("h2");
-		        		name.textContent = cat.name;
-
-		        		var age = document.createElement("p");
-		        		age.textContent = "Age: " + cat.age;
-
-		        		card.appendChild(name);
-		        		card.appendChild(age);
-
-		        		catInfo.appendChild(card);
-		        		card.style.display = "block";
-		        	}
-		        }
 		    }
 		};
 		xmlhttp.open("GET", "cats.json", true);
 		xmlhttp.send();
+
+		function displayCatInfo() {
+        	var catIndex = catSelect.value;
+        	var cat = catData.cats[catIndex];
+
+        	var card = document.createElement("div");
+        	card.className = "card";
+
+        	var name = document.createElement("h2");
+        	name.textContent = cat.name;
+
+        	var age = document.createElement("p");
+        	age.textContent = "Age: " + cat.age;
+
+        	card.appendChild(name);
+        	card.appendChild(age);
+
+        	catInfo.innerHTML = "";
+        	catInfo.appendChild(card);
+        	card.style.display = "block";
+        }
 	</script>
 </body>
 </html>
